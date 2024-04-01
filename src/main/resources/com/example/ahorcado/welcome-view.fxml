@@ -29,6 +29,11 @@
                   <Image url="@images/ahorcado.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="imageHelp" fitHeight="83.0" fitWidth="39.0" layoutX="547.0" layoutY="13.0" onMouseClicked="#onMouseClickedImage" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/helpIcon.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

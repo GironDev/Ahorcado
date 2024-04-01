@@ -1,3 +1,4 @@
+
 package com.example.ahorcado.view;
 
 import javafx.fxml.FXMLLoader;

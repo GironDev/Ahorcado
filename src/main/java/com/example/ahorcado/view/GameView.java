@@ -1,3 +1,4 @@
+
 package com.example.ahorcado.view;
 
 import com.example.ahorcado.controller.GameController;
@@ -43,4 +44,3 @@ public class GameView extends Stage {
         private static GameView INSTANCE;
     }
 }
-
