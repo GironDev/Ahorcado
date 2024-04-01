@@ -1,3 +1,4 @@
+
 package com.example.ahorcado.view.alert;
 
 import javafx.scene.control.Alert;
