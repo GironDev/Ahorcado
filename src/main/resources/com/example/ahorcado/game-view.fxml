@@ -35,7 +35,15 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
             <ImageView fx:id="imageAhorcado" fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
-            <Button alignment="TOP_CENTER" layoutX="112.0" layoutY="234.0" mnemonicParsing="false" onAction="#onHandlerButtonHelp" text="Ayuda">
+            <Button alignment="TOP_CENTER" layoutX="112.0" layoutY="284.0" mnemonicParsing="false" onAction="#onHandlerButtonHelp" text="Ayuda">
+               <font>
+                  <Font name="Comic Sans MS" size="18.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
+            </Button>
+            <Button alignment="TOP_CENTER" layoutX="101.0" layoutY="234.0" mnemonicParsing="false" onAction="#onHandlerTrybutton" text="Intentar">
                <font>
                   <Font name="Comic Sans MS" size="18.0" />
                </font>
