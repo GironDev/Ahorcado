@@ -44,7 +44,7 @@
          <children>
             <ImageView fx:id="imageAhorcado" fitHeight="150.0" fitWidth="200.0" layoutX="87.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@images/image_1.png" />
+                  <Image url="@images/ahorcado/image_1.png" />
                </image></ImageView>
             <Button fx:id="buttonHelp" alignment="TOP_CENTER" layoutX="103.0" layoutY="255.0" mnemonicParsing="false" onAction="#onHandlerButtonHelp" text="Ayuda">
                <font>
