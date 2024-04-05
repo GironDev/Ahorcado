@@ -6,6 +6,7 @@ import com.example.ahorcado.view.GameView;
 import com.example.ahorcado.view.WelcomeView;
 import com.example.ahorcado.view.alert.AlertBox;
 //import com.example.ahorcado.view.alert.AlertBoxRules;
+import com.example.ahorcado.view.alert.AlertBoxRules;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -20,7 +21,7 @@ public class WelcomeController {
     @FXML
     private ImageView imageHelp;
     private AlertBox alertBox = new AlertBox();
-    private AlertBox alertBoxRules = new AlertBox();
+    private AlertBoxRules alertBoxRules = new AlertBoxRules();
 
     private GameController gameController; // Referencia al GameController
 
@@ -61,13 +62,12 @@ public class WelcomeController {
         return !word.isEmpty() && word.matches("[a-zA-Z]+");
     }
     private void showHelpAlert() {
-//        AlertBox.showMessage(
-//                "Reglas",
-//                "Reglas del juego",
-//                "El Ahorcado es un juego para dos jugadores, en él cual un jugador (Jugador 1) piensa una palabra y el otro la intenta adivinar (jugador 2)." +
-//                        "\nTienes 7 oportunidades para adivinar la palabra." +
-//                        "\nDiviertete!!"
-//        );
-        System.out.println("HOLA");
+        alertBoxRules.showMessage(
+                "Reglas",
+                "Reglas del juego",
+                "El Ahorcado es un juego para dos jugadores, en él cual un jugador (Jugador 1) piensa una palabra y el otro la intenta adivinar (jugador 2)." +
+                        "\nTienes 7 oportunidades para adivinar la palabra." +
+                       "\nDiviertete!!"
+        );
     }
 }
