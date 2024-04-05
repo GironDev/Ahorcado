@@ -2,6 +2,7 @@ package com.example.ahorcado.controller;
 
 import com.example.ahorcado.model.Word;
 import com.example.ahorcado.view.alert.AlertBox;
+import com.example.ahorcado.view.alert.AlertBoxRules;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -58,6 +59,8 @@ public class GameController {
     private int fallos = 0;
 
     private AlertBox alertBox = new AlertBox();
+
+    private AlertBoxRules alertBoxRules = new AlertBoxRules();
 
     private int remainingHelp = 3;
 
@@ -127,12 +130,12 @@ public class GameController {
                 ObservableList<Node> childs = hBoxLayout.getChildren();
                 TextField tf = (TextField) childs.get(i);
                 if (tf.getText().equalsIgnoreCase(choiceWord)) {
-                    System.out.printf("Ya Ingresó la letra: ");
-                    System.out.println(choiceWord);
+                    //System.out.printf("Ya Ingresó la letra: ");
+                    //System.out.println(choiceWord);
                     copyList.remove(wordList.get(i));
-                    System.out.println("");
+                    //System.out.println("");
                     didChangeSomething = true;
-//                    Inserte alerta de letra ya ingresada
+                    showRepeatedLetter();
                     break;
                 }
                 if (choiceWord.equalsIgnoreCase(wordList.get(i))) {
@@ -144,15 +147,15 @@ public class GameController {
                 }
             }
             if (didChangeSomething==false){
-                System.out.printf("FALLÓ");
+                //System.out.printf("FALLÓ");
                 fallos = fallos + 1;
                 actualizarImagen();
                 txtChoice.setText("");
-                System.out.println("DEBE ACTUALIZAR LA IMAGEN");
+                //System.out.println("DEBE ACTUALIZAR LA IMAGEN");
             }
         }
-        System.out.println(copyList);
-        System.out.println(wordList);
+       // System.out.println(copyList);
+       // System.out.println(wordList);
         didChangeSomething = false;
         verifyVictory();
 
@@ -256,7 +259,23 @@ public class GameController {
         alertBox.showMessage(
                 "¡Perdiste!",
                 "Perdiste",
-                "Ya no te quedan mas intentos, juego terminado!"
+                "Ya no te quedan mas intentos, el juego ha terminado.!" +
+                        "\n La palabra era: " + word.getWordSecret()
+        );
+    }
+    private void showVictoryMessage() {
+        alertBoxRules.showMessage(
+                "¡Excelente!",
+                "¡Excelente!",
+                "Has adivinado la palabra correctamente."
+        );
+    }
+
+    private void showRepeatedLetter() {
+        alertBox.showMessage(
+                "¡Error!",
+                "Error",
+                "La letra está repetida."
         );
     }
 
@@ -278,7 +297,8 @@ public class GameController {
 
     public void verifyVictory() {
         if(copyList.size()==0){
-            System.out.println("JUEGO TERMINADO");
+            showVictoryMessage();
+            //System.out.println("JUEGO TERMINADO");
             buttonAttemp.setDisable(true);
             buttonHelp.setDisable(true);
         }
