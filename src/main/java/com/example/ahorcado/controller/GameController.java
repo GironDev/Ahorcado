@@ -55,20 +55,20 @@ public class GameController {
     private ArrayList<String> removedWords;
 
     private int intetos;
-    private int fallos;
+    private int fallos = 0;
 
     private AlertBox alertBox = new AlertBox();
 
     private int remainingHelp = 3;
 
     private static final String[] IMAGENES = {
-            "com/example/ahorcado/images/ahorcado/0.png",
-            "com/example/ahorcado/images/ahorcado/1.png",
-            "com/example/ahorcado/images/ahorcado/2.png",
-            "com/example/ahorcado/images/ahorcado/3.png",
-            "com/example/ahorcado/images/ahorcado/4.png",
-            "com/example/ahorcado/images/ahorcado/5.png",
-            "com/example/ahorcado/images/ahorcado/6.png"
+            "/com/example/ahorcado/images/ahorcado/0.png",
+            "/com/example/ahorcado/images/ahorcado/1.png",
+            "/com/example/ahorcado/images/ahorcado/2.png",
+            "/com/example/ahorcado/images/ahorcado/3.png",
+            "/com/example/ahorcado/images/ahorcado/4.png",
+            "/com/example/ahorcado/images/ahorcado/5.png",
+            "/com/example/ahorcado/images/ahorcado/6.png"
     };
 
     public void crearCamposTextoPalabraSecreta() {
@@ -105,7 +105,7 @@ public class GameController {
 
     public void verifyWord(Word word) {
 //        int intentos = 8;
-        fallos = 0;
+//        fallos = 0;
         String receivedWord = word.getWordSecret();
         ObservableList<Node> sBox = hBoxChoiceLayout.getChildren();
         TextField txtChoice = (TextField) sBox.get(0);
@@ -140,13 +140,13 @@ public class GameController {
                     copyList.remove(wordList.get(i));
                     txtChoice.setText("");
                     didChangeSomething = true;
-                    fallos = 0;
+//                    fallos = 0;
                 }
             }
             if (didChangeSomething==false){
                 System.out.printf("FALLÓ");
                 fallos = fallos + 1;
-//                    actualizarImagen();
+                actualizarImagen();
                 System.out.println("DEBE ACTUALIZAR LA IMAGEN");
             }
         }
@@ -259,11 +259,15 @@ public class GameController {
     private void actualizarImagen() {
         if (fallos < IMAGENES.length) {
             String imagePath = IMAGENES[fallos];
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            System.out.println(imagePath);
+            System.out.println(fallos);
+            Image image = new Image(String.valueOf(getClass().getResource(imagePath)));
             imageAhorcado.setImage(image);
-        } else {
+        }
+        if (fallos == 6){
             showLoseGame();
             buttonAttemp.setDisable(true);
+            buttonHelp.setDisable(true);
         }
     }
 
