@@ -147,13 +147,17 @@ public class GameController {
                 System.out.printf("FALLÓ");
                 fallos = fallos + 1;
                 actualizarImagen();
+                txtChoice.setText("");
                 System.out.println("DEBE ACTUALIZAR LA IMAGEN");
             }
         }
         System.out.println(copyList);
         System.out.println(wordList);
         didChangeSomething = false;
+        verifyVictory();
+
     }
+
 
     @FXML
     void onHandlerButtonHelp(ActionEvent event) {
@@ -210,6 +214,7 @@ public class GameController {
             buttonHelp.setDisable(true);
             showInvalidHelps();
         }
+        verifyVictory();
     }
 
     @FXML
@@ -271,4 +276,11 @@ public class GameController {
         }
     }
 
+    public void verifyVictory() {
+        if(copyList.size()==0){
+            System.out.println("JUEGO TERMINADO");
+            buttonAttemp.setDisable(true);
+            buttonHelp.setDisable(true);
+        }
+    }
 }
