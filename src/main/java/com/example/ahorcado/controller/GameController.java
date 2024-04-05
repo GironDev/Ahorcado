@@ -55,20 +55,20 @@ public class GameController {
     private ArrayList<String> removedWords;
 
     private int intetos;
-    private int fallos;
+    private int fallos = 0;
 
     private AlertBox alertBox = new AlertBox();
 
     private int remainingHelp = 3;
 
     private static final String[] IMAGENES = {
-            "com/example/ahorcado/images/ahorcado/0.png",
-            "com/example/ahorcado/images/ahorcado/1.png",
-            "com/example/ahorcado/images/ahorcado/2.png",
-            "com/example/ahorcado/images/ahorcado/3.png",
-            "com/example/ahorcado/images/ahorcado/4.png",
-            "com/example/ahorcado/images/ahorcado/5.png",
-            "com/example/ahorcado/images/ahorcado/6.png"
+            "/com/example/ahorcado/images/ahorcado/0.png",
+            "/com/example/ahorcado/images/ahorcado/1.png",
+            "/com/example/ahorcado/images/ahorcado/2.png",
+            "/com/example/ahorcado/images/ahorcado/3.png",
+            "/com/example/ahorcado/images/ahorcado/4.png",
+            "/com/example/ahorcado/images/ahorcado/5.png",
+            "/com/example/ahorcado/images/ahorcado/6.png"
     };
 
     public void crearCamposTextoPalabraSecreta() {
@@ -104,12 +104,12 @@ public class GameController {
     }
 
     public void verifyWord(Word word) {
-        int intentos = 8;
-        int fallo = 0;
+//        int intentos = 8;
+//        fallos = 0;
         String receivedWord = word.getWordSecret();
         ObservableList<Node> sBox = hBoxChoiceLayout.getChildren();
         TextField txtChoice = (TextField) sBox.get(0);
-
+        boolean didChangeSomething = false;
         // System.out.println("Texto Ingresado:");
         // System.out.println(txtChoice.getText());
 
@@ -123,25 +123,41 @@ public class GameController {
         } else if (!choiceWord.matches("[a-zA-Z]+")) {
             showInvalidLetter();
         } else if (!choiceWord.isEmpty() && choiceWord.matches("[a-zA-Z]+")) {
-
             for (int i = 0; i < wordList.size(); i++) {
                 ObservableList<Node> childs = hBoxLayout.getChildren();
                 TextField tf = (TextField) childs.get(i);
-
+                if (tf.getText().equalsIgnoreCase(choiceWord)) {
+                    System.out.printf("Ya Ingresó la letra: ");
+                    System.out.println(choiceWord);
+                    copyList.remove(wordList.get(i));
+                    System.out.println("");
+                    didChangeSomething = true;
+//                    Inserte alerta de letra ya ingresada
+                    break;
+                }
                 if (choiceWord.equalsIgnoreCase(wordList.get(i))) {
                     tf.setText(choiceWord);
+                    copyList.remove(wordList.get(i));
                     txtChoice.setText("");
-                    fallo = 0;
-                } else {
-                    fallo = fallo + 1;
-                    actualizarImagen();
+                    didChangeSomething = true;
+//                    fallos = 0;
                 }
-
             }
-
+            if (didChangeSomething==false){
+                System.out.printf("FALLÓ");
+                fallos = fallos + 1;
+                actualizarImagen();
+                txtChoice.setText("");
+                System.out.println("DEBE ACTUALIZAR LA IMAGEN");
+            }
         }
+        System.out.println(copyList);
+        System.out.println(wordList);
+        didChangeSomething = false;
+        verifyVictory();
 
     }
+
 
     @FXML
     void onHandlerButtonHelp(ActionEvent event) {
@@ -161,7 +177,20 @@ public class GameController {
             String actualPosition = wordList.get(i);
             TextField tf = (TextField) childs.get(i);
             if (tf.getText().equalsIgnoreCase(selectedLetter)) {
-                // System.out.println("Espacio Ocupado");
+                 System.out.println("Espacio Ocupado");
+                 while (tf.getText().equalsIgnoreCase(selectedLetter)) {
+                    randomWordHelp = (int) (Math.random() * copyList.size() + 0);
+                    selectedLetter = copyList.get(randomWordHelp);
+                }
+                System.out.println(selectedLetter);
+                if (actualPosition.equalsIgnoreCase(selectedLetter)) {
+                    tf.setText(selectedLetter);
+                    // wordList.removeIf( n -> selectedLetter.equals(n));
+                    copyList.remove(actualPosition);
+
+                }
+                System.out.println(copyList);
+                System.out.println(wordList);
                 //
 
             } else {
@@ -185,6 +214,7 @@ public class GameController {
             buttonHelp.setDisable(true);
             showInvalidHelps();
         }
+        verifyVictory();
     }
 
     @FXML
@@ -234,12 +264,23 @@ public class GameController {
     private void actualizarImagen() {
         if (fallos < IMAGENES.length) {
             String imagePath = IMAGENES[fallos];
-            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            System.out.println(imagePath);
+            System.out.println(fallos);
+            Image image = new Image(String.valueOf(getClass().getResource(imagePath)));
             imageAhorcado.setImage(image);
-        } else {
+        }
+        if (fallos == 6){
             showLoseGame();
             buttonAttemp.setDisable(true);
+            buttonHelp.setDisable(true);
         }
     }
 
+    public void verifyVictory() {
+        if(copyList.size()==0){
+            System.out.println("JUEGO TERMINADO");
+            buttonAttemp.setDisable(true);
+            buttonHelp.setDisable(true);
+        }
+    }
 }
