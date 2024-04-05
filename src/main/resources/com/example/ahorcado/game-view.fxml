@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -31,7 +33,7 @@
                </font>
             </Label>
             <HBox fx:id="hBoxLayout" layoutX="16.0" layoutY="99.0" prefHeight="96.0" prefWidth="268.0" />
-            <HBox fx:id="hBoxChoiceLayout" alignment="CENTER" layoutX="50.0" layoutY="220.0" prefHeight="100.0" prefWidth="200.0">
+            <HBox fx:id="hBoxChoiceLayout" alignment="CENTER" layoutX="50.0" layoutY="229.0" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <TextField id="0" maxHeight="40.0" maxWidth="40.0" />
                </children>
@@ -40,8 +42,11 @@
       </AnchorPane>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.rowSpan="2">
          <children>
-            <ImageView fx:id="imageAhorcado" fitHeight="150.0" fitWidth="200.0" layoutX="50.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
-            <Button fx:id="buttonHelp" alignment="TOP_CENTER" layoutX="112.0" layoutY="284.0" mnemonicParsing="false" onAction="#onHandlerButtonHelp" text="Ayuda">
+            <ImageView fx:id="imageAhorcado" fitHeight="150.0" fitWidth="200.0" layoutX="87.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/ahorcado/image_1.png" />
+               </image></ImageView>
+            <Button fx:id="buttonHelp" alignment="TOP_CENTER" layoutX="103.0" layoutY="255.0" mnemonicParsing="false" onAction="#onHandlerButtonHelp" text="Ayuda">
                <font>
                   <Font name="Comic Sans MS" size="18.0" />
                </font>
@@ -49,7 +54,7 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </Button>
-            <Button alignment="TOP_CENTER" layoutX="101.0" layoutY="234.0" mnemonicParsing="false" onAction="#onHandlerTrybutton" text="Intentar">
+            <Button fx:id="buttonAttemp" alignment="TOP_CENTER" layoutX="92.0" layoutY="206.0" mnemonicParsing="false" onAction="#onHandlerTrybutton" text="Intentar">
                <font>
                   <Font name="Comic Sans MS" size="18.0" />
                </font>
@@ -61,10 +66,18 @@
       </AnchorPane>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #c9d0eb;" GridPane.columnSpan="2">
          <children>
+            <ImageView fitHeight="57.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/favicon.png" />
+               </image>
+            </ImageView>
             <Label text="Ahorcado">
                <font>
                   <Font name="Comic Sans MS" size="36.0" />
                </font>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
             </Label>
          </children>
       </HBox>

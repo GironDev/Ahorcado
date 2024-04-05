@@ -1,6 +1,7 @@
 package com.example.ahorcado.controller;
 
 import com.example.ahorcado.model.Word;
+import com.example.ahorcado.view.alert.AlertBox;
 import javafx.beans.Observable;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,6 +20,7 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class GameController {
     @FXML
@@ -27,6 +29,7 @@ public class GameController {
 
     @FXML
     private HBox hBoxChoiceLayout;
+
     @FXML
     private HBox hBoxLayout;
     @FXML
@@ -34,6 +37,9 @@ public class GameController {
 
     @FXML
     private Button buttonHelp;
+
+    @FXML
+    private Button buttonAttemp;
 
     @FXML
     private TextField afterCreatedFields;
@@ -51,7 +57,19 @@ public class GameController {
     private int intetos;
     private int fallos;
 
+    private AlertBox alertBox = new AlertBox();
+
     private int remainingHelp = 3;
+
+    private static final String[] IMAGENES = {
+            "com/example/ahorcado/images/ahorcado/0.png",
+            "com/example/ahorcado/images/ahorcado/1.png",
+            "com/example/ahorcado/images/ahorcado/2.png",
+            "com/example/ahorcado/images/ahorcado/3.png",
+            "com/example/ahorcado/images/ahorcado/4.png",
+            "com/example/ahorcado/images/ahorcado/5.png",
+            "com/example/ahorcado/images/ahorcado/6.png"
+    };
 
     public void crearCamposTextoPalabraSecreta() {
         String secretWord = word.getWordSecret();
@@ -86,7 +104,7 @@ public class GameController {
     }
 
     public void verifyWord(Word word) {
-        int intentos = 6;
+        int intentos = 8;
         int fallo = 0;
         String receivedWord = word.getWordSecret();
         ObservableList<Node> sBox = hBoxChoiceLayout.getChildren();
@@ -101,9 +119,9 @@ public class GameController {
         String choiceWord = txtChoice.getText();
 
         if (choiceWord.length() > 1) {
-            // System.out.println("PALABRA LARGA");
+            showInvalidWord();
         } else if (!choiceWord.matches("[a-zA-Z]+")) {
-            // System.out.println("No es un caracter válido");
+            showInvalidLetter();
         } else if (!choiceWord.isEmpty() && choiceWord.matches("[a-zA-Z]+")) {
 
             for (int i = 0; i < wordList.size(); i++) {
@@ -116,7 +134,7 @@ public class GameController {
                     fallo = 0;
                 } else {
                     fallo = fallo + 1;
-
+                    actualizarImagen();
                 }
 
             }
@@ -165,6 +183,7 @@ public class GameController {
         // System.out.println(copyList);
         if (remainingHelp == 0) {
             buttonHelp.setDisable(true);
+            showInvalidHelps();
         }
     }
 
@@ -178,6 +197,49 @@ public class GameController {
         this.word = word;
         crearCamposTextoPalabraSecreta(); // Crea los TextFields al asignar la palabra
 
+    }
+
+    private void showInvalidHelps() {
+        alertBox.showMessage(
+                "¡Error!",
+                "No te quedan mas ayudas",
+                "Ya gastaste todas tus ayudas disponibles."
+        );
+    }
+
+    private void showInvalidLetter() {
+        alertBox.showMessage(
+                "¡Error!",
+                "Caractér incorrecto",
+                "Debes insertar un caractér válido."
+        );
+    }
+
+    private void showInvalidWord() {
+        alertBox.showMessage(
+                "¡Error!",
+                "Error",
+                "Debes insertar solo una letra."
+        );
+    }
+    private void showLoseGame() {
+        alertBox.showMessage(
+                "¡Perdiste!",
+                "Perdiste",
+                "Ya no te quedan mas intentos, juego terminado!"
+        );
+    }
+
+
+    private void actualizarImagen() {
+        if (fallos < IMAGENES.length) {
+            String imagePath = IMAGENES[fallos];
+            Image image = new Image(getClass().getResourceAsStream(imagePath));
+            imageAhorcado.setImage(image);
+        } else {
+            showLoseGame();
+            buttonAttemp.setDisable(true);
+        }
     }
 
 }
