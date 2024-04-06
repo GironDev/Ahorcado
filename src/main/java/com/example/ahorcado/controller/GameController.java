@@ -88,8 +88,8 @@ public class GameController {
             wordTxt.setPrefWidth(40);
             wordTxt.setEditable(false);
             hBoxLayout.getChildren().add(wordTxt);
-            // // System.out.println("added camp " + i);
-            // // System.out.println(wordTxt.getId());
+            // // // System.out.println("added camp " + i);
+            // // // System.out.println(wordTxt.getId());
             // manejarPulsacionTecla(wordTxt, i);
             test.add(TextFieldCreated);
 
@@ -102,7 +102,7 @@ public class GameController {
         wordList = new ArrayList<String>();
         copyList = new ArrayList<String>();
 
-        // // System.out.println("STRIPPED WORD : ");
+        // // // System.out.println("STRIPPED WORD : ");
         for (int i = 0; i < splittedWord.length; i++) {
             wordList.add(splittedWord[i]);
             copyList.add(splittedWord[i]);
@@ -116,8 +116,8 @@ public class GameController {
         ObservableList<Node> sBox = hBoxChoiceLayout.getChildren();
         TextField txtChoice = (TextField) sBox.get(0);
         boolean didChangeSomething = false;
-        // System.out.println("Texto Ingresado:");
-        // System.out.println(txtChoice.getText());
+        // // System.out.println("Texto Ingresado:");
+        // // System.out.println(txtChoice.getText());
 
         // String[] splittedWord = receivedWord.split("");
         // wordList = new ArrayList<String>();
@@ -133,10 +133,10 @@ public class GameController {
                 ObservableList<Node> childs = hBoxLayout.getChildren();
                 TextField tf = (TextField) childs.get(i);
                 if (tf.getText().equalsIgnoreCase(choiceWord)) {
-                    //System.out.printf("Ya Ingresó la letra: ");
-                    //System.out.println(choiceWord);
+                    //// System.out.printf("Ya Ingresó la letra: ");
+                    //// System.out.println(choiceWord);
                     copyList.remove(wordList.get(i));
-                    //System.out.println("");
+                    //// System.out.println("");
                     didChangeSomething = true;
                     showRepeatedLetter();
                     break;
@@ -150,15 +150,15 @@ public class GameController {
                 }
             }
             if (didChangeSomething==false){
-                //System.out.printf("FALLÓ");
+                //// System.out.printf("FALLÓ");
                 fallos = fallos + 1;
                 actualizarImagen();
                 txtChoice.setText("");
-                //System.out.println("DEBE ACTUALIZAR LA IMAGEN");
+                //// System.out.println("DEBE ACTUALIZAR LA IMAGEN");
             }
         }
-       // System.out.println(copyList);
-       // System.out.println(wordList);
+       // // System.out.println(copyList);
+       // // System.out.println(wordList);
         didChangeSomething = false;
         verifyVictory();
 
@@ -168,14 +168,14 @@ public class GameController {
     @FXML
     void onHandlerButtonHelp(ActionEvent event) throws IOException {
         remainingHelp = remainingHelp - 1;
-        // System.out.println("Ayudas restantes:");
-        // System.out.println(remainingHelp);
+        // // System.out.println("Ayudas restantes:");
+        // // System.out.println(remainingHelp);
         int randomWordHelp = (int) (Math.random() * copyList.size() + 0);
-        // System.out.println(randomWordHelp);
-        // System.out.print("Letra a eliminar:");
+        // // System.out.println(randomWordHelp);
+        // // System.out.print("Letra a eliminar:");
         // @iMrStevenS2 was here ;)
-        // System.out.println(wordList.get(randomWordHelp));
-        // System.out.println("********************");
+        // // System.out.println(wordList.get(randomWordHelp));
+        // // System.out.println("********************");
         String selectedLetter = copyList.get(randomWordHelp);
         ObservableList<Node> childs = hBoxLayout.getChildren();
         int newRandomWordHelp;
@@ -183,20 +183,20 @@ public class GameController {
             String actualPosition = wordList.get(i);
             TextField tf = (TextField) childs.get(i);
             if (tf.getText().equalsIgnoreCase(selectedLetter)) {
-                 System.out.println("Espacio Ocupado");
+                 // System.out.println("Espacio Ocupado");
                  while (tf.getText().equalsIgnoreCase(selectedLetter)) {
                     randomWordHelp = (int) (Math.random() * copyList.size() + 0);
                     selectedLetter = copyList.get(randomWordHelp);
                 }
-                System.out.println(selectedLetter);
+                // System.out.println(selectedLetter);
                 if (actualPosition.equalsIgnoreCase(selectedLetter)) {
                     tf.setText(selectedLetter);
                     // wordList.removeIf( n -> selectedLetter.equals(n));
                     copyList.remove(actualPosition);
 
                 }
-                System.out.println(copyList);
-                System.out.println(wordList);
+                // System.out.println(copyList);
+                // System.out.println(wordList);
                 //
 
             } else {
@@ -205,17 +205,17 @@ public class GameController {
                     // wordList.removeIf( n -> selectedLetter.equals(n));
                     copyList.remove(actualPosition);
                 }
-                // // System.out.println("Already Removed");
+                // // // System.out.println("Already Removed");
                 // }
 
             }
 
-            // System.out.println(selectedLetter);
+            // // System.out.println(selectedLetter);
 
         }
 
-        // System.out.println(wordList);
-        // System.out.println(copyList);
+        // // System.out.println(wordList);
+        // // System.out.println(copyList);
         if (remainingHelp == 0) {
             buttonHelp.setDisable(true);
             showInvalidHelps();
@@ -292,8 +292,8 @@ public class GameController {
     private void actualizarImagen() throws IOException {
         if (fallos < IMAGENES.length) {
             String imagePath = IMAGENES[fallos];
-            System.out.println(imagePath);
-            System.out.println(fallos);
+            // System.out.println(imagePath);
+            // System.out.println(fallos);
             Image image = new Image(String.valueOf(getClass().getResource(imagePath)));
             imageAhorcado.setImage(image);
         }
@@ -307,7 +307,7 @@ public class GameController {
     public void verifyVictory() throws IOException {
         if(copyList.size()==0){
             showVictoryMessage();
-            //System.out.println("JUEGO TERMINADO");
+            //// System.out.println("JUEGO TERMINADO");
             buttonAttemp.setDisable(true);
             buttonHelp.setDisable(true);
         }
