@@ -1,6 +1,8 @@
 package com.example.ahorcado.controller;
 
 import com.example.ahorcado.model.Word;
+import com.example.ahorcado.view.GameView;
+import com.example.ahorcado.view.WelcomeView;
 import com.example.ahorcado.view.alert.AlertBox;
 import com.example.ahorcado.view.alert.AlertBoxRules;
 import javafx.beans.Observable;
@@ -18,6 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -106,7 +109,7 @@ public class GameController {
         }
     }
 
-    public void verifyWord(Word word) {
+    public void verifyWord(Word word) throws IOException {
 //        int intentos = 8;
 //        fallos = 0;
         String receivedWord = word.getWordSecret();
@@ -163,7 +166,7 @@ public class GameController {
 
 
     @FXML
-    void onHandlerButtonHelp(ActionEvent event) {
+    void onHandlerButtonHelp(ActionEvent event) throws IOException {
         remainingHelp = remainingHelp - 1;
         // System.out.println("Ayudas restantes:");
         // System.out.println(remainingHelp);
@@ -221,7 +224,7 @@ public class GameController {
     }
 
     @FXML
-    void onHandlerTrybutton(ActionEvent event) {
+    void onHandlerTrybutton(ActionEvent event) throws IOException {
         verifyWord(word);
 
     }
@@ -255,20 +258,26 @@ public class GameController {
                 "Debes insertar solo una letra."
         );
     }
-    private void showLoseGame() {
+    private void showLoseGame() throws IOException {
         alertBox.showMessage(
                 "¡Perdiste!",
                 "Perdiste",
                 "Ya no te quedan mas intentos, el juego ha terminado.!" +
                         "\n La palabra era: " + word.getWordSecret()
         );
+
+        WelcomeView.getInstance();
+        GameView.deleteInstance();
     }
-    private void showVictoryMessage() {
+    private void showVictoryMessage() throws IOException {
         alertBoxRules.showMessage(
                 "¡Excelente!",
                 "¡Excelente!",
                 "Has adivinado la palabra correctamente."
         );
+
+        WelcomeView.getInstance();
+        GameView.deleteInstance();
     }
 
     private void showRepeatedLetter() {
@@ -280,7 +289,7 @@ public class GameController {
     }
 
 
-    private void actualizarImagen() {
+    private void actualizarImagen() throws IOException {
         if (fallos < IMAGENES.length) {
             String imagePath = IMAGENES[fallos];
             System.out.println(imagePath);
@@ -295,7 +304,7 @@ public class GameController {
         }
     }
 
-    public void verifyVictory() {
+    public void verifyVictory() throws IOException {
         if(copyList.size()==0){
             showVictoryMessage();
             //System.out.println("JUEGO TERMINADO");
